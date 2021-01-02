@@ -375,6 +375,3 @@ CMD java -jar placeAuctionProject-1.0-jar-with-dependencies.jar -m $MASTERIP -id
  - *NAME*: Name of the user / peer accessing the system.
  - *GUI*: Parameter that allows you to decide when starting up whether to start the version with a graphical interface or not.
 
-
-hdfQ==
--->
