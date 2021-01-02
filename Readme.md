@@ -348,9 +348,13 @@ So this technique inherently fits the solution, the solution contains a dockerfi
 
 
 ```dockerfile
+FROM alpine/git
+WORKDIR /app
+RUN git clone https://github.com/AlfDev1996/PlaceAuctionProject.git
+
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
-COPY / /app
+COPY --from=0 /app/PlaceAuctionProject /app
 RUN mvn clean
 RUN mvn package
 
@@ -360,7 +364,7 @@ ENV MASTERIP=127.0.0.1
 ENV ID=0
 ENV NAME=DEFAULTNAME
 ENV GUI=NO
-COPY --from=0 /app/target/placeAuctionProject-1.0-jar-with-dependencies.jar /app
+COPY --from=1 /app/target/placeAuctionProject-1.0-jar-with-dependencies.jar /app
 
 CMD java -jar placeAuctionProject-1.0-jar-with-dependencies.jar -m $MASTERIP -id $ID -name $NAME -gui $GUI
 ```
@@ -372,12 +376,5 @@ CMD java -jar placeAuctionProject-1.0-jar-with-dependencies.jar -m $MASTERIP -id
  - *GUI*: Parameter that allows you to decide when starting up whether to start the version with a graphical interface or not.
 
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNzAyMzE2OTEsMTA4Njg5MzU5OSwtNz
-U2MjkxNTM1LC03NzI3Nzg3MDksOTE1MzQ4OTc1LC05OTM1NjM3
-MDQsMjExNzUwODkyMywxMzM3MDQxMTU1LC0yNzI5OTA4MzUsLT
-g3MDQxODcyNywtMjQwNTA2MTIwLC0xNDE1NDM5OTgxLDE5NTIw
-NTk5NDcsMTQ2NTgzNTMyNSwxMDIyODcxNzU5LDE5NDMwNTY0ND
-MsMTY1ODk1ODM4MCwxOTU1NDcwNjM5LDM1NzQwNjE0OCw5NjU2
-OTU5MzddfQ==
+hdfQ==
 -->
