@@ -383,6 +383,8 @@ First of all you can build your docker container:
 #### Start master peer
 
 After that you can start the master peer, in interactive mode (-i) and with four (-e) environment variables:
+>In addition to the 4 variables listed above, in the version with graphic interface we need an additional variable, that is the DISPLAY variable
+>
 With GUI:
 
     docker run -i --name MASTER-PEER -e DISPLAY=host.docker.internal:0 -e MASTERIP="127.0.0.1" -e ID=0 -e NAME="yourname" -e GUI="YES" place-auction-project
@@ -408,11 +410,11 @@ Command Line Vesion:
     docker run -i --name FIRST-PEER -e MASTERIP="172.17.0.2" -e ID=1 -e NAME="peername" -e GUI="NO" place-auction-project
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg5NTM4Njg0MCwtMTU4MTgwMjUyMCwtOD
-k1Mzg2ODQwLDQ2NTMyODc0MiwtMTU4MTc0ODY3NywtNDkyOTY1
-MzY0LDc1ODEyNzM0MSwtMTA3MDIzMTY5MSwxMDg2ODkzNTk5LC
-03NTYyOTE1MzUsLTc3Mjc3ODcwOSw5MTUzNDg5NzUsLTk5MzU2
-MzcwNCwyMTE3NTA4OTIzLDEzMzcwNDExNTUsLTI3Mjk5MDgzNS
-wtODcwNDE4NzI3LC0yNDA1MDYxMjAsLTE0MTU0Mzk5ODEsMTk1
-MjA1OTk0N119
+eyJoaXN0b3J5IjpbMTYxOTgyNTQ5OSwxMDk4NzkwMTg0LC04OT
+UzODY4NDAsLTE1ODE4MDI1MjAsLTg5NTM4Njg0MCw0NjUzMjg3
+NDIsLTE1ODE3NDg2NzcsLTQ5Mjk2NTM2NCw3NTgxMjczNDEsLT
+EwNzAyMzE2OTEsMTA4Njg5MzU5OSwtNzU2MjkxNTM1LC03NzI3
+Nzg3MDksOTE1MzQ4OTc1LC05OTM1NjM3MDQsMjExNzUwODkyMy
+wxMzM3MDQxMTU1LC0yNzI5OTA4MzUsLTg3MDQxODcyNywtMjQw
+NTA2MTIwXX0=
 -->
