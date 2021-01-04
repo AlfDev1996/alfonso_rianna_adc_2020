@@ -24,22 +24,25 @@ import javax.swing.plaf.OptionPaneUI;
  *
  * @author alfonso
  */
-public class mainFrame extends javax.swing.JFrame{
-private createAuctionFrame create;
-private placeBidFrame placeBid;
-private checkAuctionFrame checkFrame;
-private deleteBid deleteBidFrame;
-private deleteAuctionFrame deleteAuctionFrame;
+public class mainFrame extends javax.swing.JFrame {
+
+    private createAuctionFrame create;
+    private placeBidFrame placeBid;
+    private checkAuctionFrame checkFrame;
+    private deleteBid deleteBidFrame;
+    private deleteAuctionFrame deleteAuctionFrame;
     /**
      * Creates new form mainFrame
      */
-private String masterIp;
-private int id;
-private String name;
-private AuctionMechanismImpl peer;
-private ArrayList<String> scheduledMessage = new ArrayList<>() ;
+    private String masterIp;
+    private int id;
+    private String name;
+    private AuctionMechanismImpl peer;
+    private ArrayList<String> scheduledMessage = new ArrayList<>();
+
     public mainFrame(String masterIp, int id, String name) throws Exception {
         class MessageListenerImpl implements MessageListener {
+
             int peerid;
 
             public MessageListenerImpl(int peerid) {
@@ -55,17 +58,15 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
             }
 
         }
-        
-        this.masterIp =masterIp;
-        this.id=id;
-        this.name=name;
-        this.peer =new AuctionMechanismImpl(id, masterIp, new MessageListenerImpl(id), name);
-        
+
+        this.masterIp = masterIp;
+        this.id = id;
+        this.name = name;
+        this.peer = new AuctionMechanismImpl(id, masterIp, new MessageListenerImpl(id), name);
+
         initComponents();
-        welcomeMsg.setText("Benvenuto, "+this.name);
+        welcomeMsg.setText("Benvenuto, " + this.name);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -214,7 +215,7 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(welcomeMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36))))
         );
         layout.setVerticalGroup(
@@ -254,110 +255,105 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-   public void outConsoleSet(String text){
-       consoleDisplay.append("\n"+text+"\n");
-   }
-   
-   public void messageForUser(mainFrame parent,long endTime, final String auctionName){
-       new java.util.Timer().schedule(
+    public void outConsoleSet(String text) {
+        consoleDisplay.append("\n" + text + "\n");
+    }
+
+    public void messageForUser(mainFrame parent, long endTime, final String auctionName) {
+        new java.util.Timer().schedule(
                 new java.util.TimerTask() {
             @Override
             public void run() {
-                        String status;
+                String status;
                 try {
-                   
-                    if(peer.interestedAuction(auctionName)){
-                      
-                    status = peer.checkAuction(auctionName);
-                     JOptionPane.showMessageDialog(parent, status);
+
+                    if (peer.interestedAuction(auctionName)) {
+
+                        status = peer.checkAuction(auctionName);
+                        JOptionPane.showMessageDialog(parent, status);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                       
-                    
-                
+
             }
         },
                 endTime
         );
-       
-       //
-   }
-   
-   public static void setConsole(String text){
-       
-   }
-    
-    
+
+        //
+    }
+
+    public static void setConsole(String text) {
+
+    }
+
+
     private void btnCreateAuctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAuctionActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnCreateAuctionActionPerformed
 
     private void btnCreateAuctionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateAuctionMouseClicked
         // TODO add your handling code here:
-        if(create ==  null || !create.isShowing()){
-        create = new createAuctionFrame(this,peer);
-        create.setLocation(this.getX(), this.getY());
-        create.setResizable(false);
-        create.setVisible(true);
-        }
-        else{
+        if (create == null || !create.isShowing()) {
+            create = new createAuctionFrame(this, peer);
+            create.setLocation(this.getX(), this.getY());
+            create.setResizable(false);
+            create.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "La finestra è già aperta");
-            
+
         }
-            
-        
+
+
     }//GEN-LAST:event_btnCreateAuctionMouseClicked
 
     private void btnPlaceBidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlaceBidMouseClicked
         // TODO add your handling code here:
-        if(placeBid == null || !placeBid.isShowing()){
-        placeBid = new placeBidFrame(this,peer,scheduledMessage);
-        placeBid.setLocation(this.getX(), this.getY());
-        placeBid.setResizable(false);
-        placeBid.setVisible(true);
-        }else{
+        if (placeBid == null || !placeBid.isShowing()) {
+            placeBid = new placeBidFrame(this, peer, scheduledMessage);
+            placeBid.setLocation(this.getX(), this.getY());
+            placeBid.setResizable(false);
+            placeBid.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "La finestra è già aperta");
-            
+
         }
     }//GEN-LAST:event_btnPlaceBidMouseClicked
 
     private void btnStatusAuctionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusAuctionMouseClicked
         // TODO add your handling code here:
-        if(checkFrame == null || !checkFrame.isShowing()){
-        checkFrame = new checkAuctionFrame(this,peer);
-        checkFrame.setLocation(this.getX(), this.getY());
-        checkFrame.setResizable(false);
-        checkFrame.setVisible(true);
-        }else{
+        if (checkFrame == null || !checkFrame.isShowing()) {
+            checkFrame = new checkAuctionFrame(this, peer);
+            checkFrame.setLocation(this.getX(), this.getY());
+            checkFrame.setResizable(false);
+            checkFrame.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "La finestra è già aperta");
-            
+
         }
     }//GEN-LAST:event_btnStatusAuctionMouseClicked
 
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         // TODO add your handling code here:
-         if(deleteBidFrame == null || !deleteBidFrame.isShowing()){
-        deleteBidFrame = new deleteBid(this,peer);
-        deleteBidFrame.setLocation(this.getX(), this.getY());
-        deleteBidFrame.setResizable(false);
-        deleteBidFrame.setVisible(true);
-        }else{
+        if (deleteBidFrame == null || !deleteBidFrame.isShowing()) {
+            deleteBidFrame = new deleteBid(this, peer);
+            deleteBidFrame.setLocation(this.getX(), this.getY());
+            deleteBidFrame.setResizable(false);
+            deleteBidFrame.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "La finestra è già aperta");
-            
+
         }
     }//GEN-LAST:event_btnDeleteMouseClicked
 
     private void btnLeaveSystemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLeaveSystemMouseClicked
         // TODO add your handling code here:
-        int reply = JOptionPane.showConfirmDialog(this, "Sicuro di voler lasciare il sistema?", "Close?",  JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION)
-        {
+        int reply = JOptionPane.showConfirmDialog(this, "Sicuro di voler lasciare il sistema?", "Close?", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
             try {
                 peer.leaveSystem();
             } catch (IOException ex) {
@@ -365,26 +361,26 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-             System.exit(0);
+            System.exit(0);
         }
     }//GEN-LAST:event_btnLeaveSystemMouseClicked
 
     private void btnMyObjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMyObjectMouseClicked
-    try {
-        // TODO add your handling code here:
-        String s="";
-        int includeParticipation =JOptionPane.showConfirmDialog(this,"Includere Aste a cui si partecipa", "Seleziona",JOptionPane.YES_NO_OPTION);
-        if(includeParticipation == JOptionPane.YES_OPTION)
-            s=peer.summaryOfMyObject(true);
-        else
-            if(includeParticipation== JOptionPane.NO_OPTION)
-                s= peer.summaryOfMyObject(false);
-        outConsoleSet(s);
-    } catch (IOException ex) {
-        Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            // TODO add your handling code here:
+            String s = "";
+            int includeParticipation = JOptionPane.showConfirmDialog(this, "Includere Aste a cui si partecipa", "Seleziona", JOptionPane.YES_NO_OPTION);
+            if (includeParticipation == JOptionPane.YES_OPTION) {
+                s = peer.summaryOfMyObject(true);
+            } else if (includeParticipation == JOptionPane.NO_OPTION) {
+                s = peer.summaryOfMyObject(false);
+            }
+            outConsoleSet(s);
+        } catch (IOException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMyObjectMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -394,14 +390,14 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
 
     private void btnDeleteAuctionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteAuctionMouseClicked
         // TODO add your handling code here:
-         if(deleteAuctionFrame ==  null || !deleteAuctionFrame.isShowing()){
-             deleteAuctionFrame = new deleteAuctionFrame(this,peer);
-             deleteAuctionFrame.setLocation(this.getX(),this.getY());
-             deleteAuctionFrame.setResizable(false);
-             deleteAuctionFrame.setVisible(true);
-         }else{
+        if (deleteAuctionFrame == null || !deleteAuctionFrame.isShowing()) {
+            deleteAuctionFrame = new deleteAuctionFrame(this, peer);
+            deleteAuctionFrame.setLocation(this.getX(), this.getY());
+            deleteAuctionFrame.setResizable(false);
+            deleteAuctionFrame.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(this, "La finestra è già aperta");
-            
+
         }
     }//GEN-LAST:event_btnDeleteAuctionMouseClicked
 
@@ -411,7 +407,7 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
 
     private void btnUpdateDescriptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateDescriptionMouseClicked
         // TODO add your handling code here:
-        String name="", description="";
+        String name = "", description = "";
         JTextField auctioName = new JTextField(15);
         JTextField desc = new JTextField(20);
 
@@ -422,27 +418,25 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
         myPanel.add(new JLabel("Descrizione"));
         myPanel.add(desc);
 
-        int result = JOptionPane.showConfirmDialog(this, myPanel,"Inserire Nome Asta e descrizione", JOptionPane.OK_CANCEL_OPTION);
-        if(result == JOptionPane.OK_OPTION){
-            name= auctioName.getText();
+        int result = JOptionPane.showConfirmDialog(this, myPanel, "Inserire Nome Asta e descrizione", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            name = auctioName.getText();
             description = desc.getText();
-            if(name.equalsIgnoreCase("") ||  description.equalsIgnoreCase("")){
+            if (name.equalsIgnoreCase("") || description.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(this, "Errore Dati di Input");
-            } else
-            {
+            } else {
                 try {
                     String res = peer.updateAuctionDescription(name, description);
                     outConsoleSet(res);
                 } catch (ClassNotFoundException ex) {
-                     JOptionPane.showMessageDialog(this, "Errore nella modifica");
+                    JOptionPane.showMessageDialog(this, "Errore nella modifica");
                     Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                   
+
                 } catch (IOException ex) {
-                     JOptionPane.showMessageDialog(this, "Errore nella modifica");
+                    JOptionPane.showMessageDialog(this, "Errore nella modifica");
                     Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            
-                
+
             }
         }
     }//GEN-LAST:event_btnUpdateDescriptionMouseClicked
@@ -454,14 +448,13 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
     /**
      * @param args the command line arguments
      */
-    
-   /* public static void main(String args[]) {
+    /* public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-    /*    try {
+     */
+ /*    try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -481,7 +474,7 @@ private ArrayList<String> scheduledMessage = new ArrayList<>() ;
         //</editor-fold>
 
         /* Create and display the form */
-     /*   java.awt.EventQueue.invokeLater(new Runnable() {
+ /*   java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new mainFrame().setVisible(true);
             }

@@ -6,15 +6,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User implements Serializable {
+
     private String name;
     private PeerAddress peerAddress;
 
-
     public User() {
         this.name = "";
-        this.peerAddress= null;
+        this.peerAddress = null;
     }
-
 
     public PeerAddress getPeerAddress() {
         return peerAddress;
@@ -37,5 +36,3 @@ public class User implements Serializable {
         this.name = name;
     }
 }
-
-

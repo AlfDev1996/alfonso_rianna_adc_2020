@@ -9,9 +9,21 @@ package it.unisa.adc.auctionProject;
  *
  * @author alfonso
  */
-public class CreateAuctionException extends Exception{
-  public CreateAuctionException() { super(); }
-  public CreateAuctionException(String message) { super(message); }
-  public CreateAuctionException(String message, Throwable cause) { super(message, cause); }
-  public CreateAuctionException(Throwable cause) { super(cause); }
+public class CreateAuctionException extends Exception {
+
+    public CreateAuctionException() {
+        super();
+    }
+
+    public CreateAuctionException(String message) {
+        super(message);
+    }
+
+    public CreateAuctionException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public CreateAuctionException(Throwable cause) {
+        super(cause);
+    }
 }

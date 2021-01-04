@@ -77,28 +77,26 @@ public class App {
                                 .read("Descrizione:");
 
                         double reservePrice = textIO.newDoubleInputReader()
-                                .withDefaultValue(0.0)
+                                .withDefaultValue(1.0)
                                 .read("Prezzo Di Riserva:");
 
                         String expireDate = textIO.newStringInputReader()
                                 .withDefaultValue("01/01/2100 00:00")
                                 .read("Data Scadenza Formato [DD/MM/YYYY hh:mm]:");
 
-                        Date expire_date = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(expireDate);
+                        String test = verifyParameter(nameAuction, descrizione, expireDate, reservePrice);
+                        if (test.equalsIgnoreCase("success")) {
 
-                        if (reservePrice <= 0) {
-                            terminal.printf("Prezzo di riserva errato");
-                            continue;
-                        }
-                        
-                        if(expire_date.before(new Date(System.currentTimeMillis() + 3600 * 1000))){
-                            terminal.printf("La data di creazione deve essere successiva alla data corrente locale");
-                            continue;
-                        }
-                        if (peer.createAuction(nameAuction, expire_date, reservePrice, descrizione)) {
-                            terminal.printf("Asta %s creata con successo ", nameAuction);
+                            Date expire_date = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(expireDate);
+
+                            if (peer.createAuction(nameAuction, expire_date, reservePrice, descrizione)) {
+                                terminal.printf("\nAsta %s creata con successo \n", nameAuction);
+                            } else {
+                                terminal.printf("\nErrore nella creazione dell'asta\n");
+                            }
+
                         } else {
-                            terminal.printf("Errore nella creazione dell'asta");
+                            terminal.printf("\nErrore parametri: %s \n", test);
                         }
                         break;
 
@@ -121,12 +119,14 @@ public class App {
                                     .withDefaultValue(1.0)
                                     .read("Offerta: ");
 
-                            if (amount > 0) {
+                            String check = verifyParameter(auctionName, null, null, amount);
+                            if (check.equalsIgnoreCase("success")) {
                                 String result = peer.placeAbid(auctionName, amount);
                                 terminal.printf(" %s\n", result + "\n");
                             } else {
-                                terminal.printf("Error in Parameters\n");
+                                terminal.printf("\nErrore parametri: %s \n", check);
                             }
+
                         } else {
                             terminal.printf("Inserisci Nome Asta\n");
                             String auctionName = textIO.newStringInputReader()
@@ -134,11 +134,17 @@ public class App {
                                     .read("Name:");
                             printRaiseBid(terminal);
                             int raiseValue = textIO.newIntInputReader()
-                                .withMaxVal(3)
-                                .withMinVal(1)
-                                .read("Raise Value");
-                            String result = peer.raiseOnAuction(auctionName, raiseValue);
-                            terminal.printf(" %s\n", result + "\n");
+                                    .withMaxVal(3)
+                                    .withMinVal(1)
+                                    .read("Raise Value");
+                            String checkAuction = verifyParameter(auctionName, null, null, null);
+                            if (checkAuction.equalsIgnoreCase("success")) {
+
+                                String result = peer.raiseOnAuction(auctionName, raiseValue);
+                                terminal.printf(" %s\n", result + "\n");
+                            } else {
+                                terminal.printf("\nErrore parametri: %s \n", checkAuction);
+                            }
                         }
                         break;
 
@@ -147,9 +153,13 @@ public class App {
                         String astaCancelBid = textIO.newStringInputReader()
                                 .withDefaultValue("Asta Default")
                                 .read("Name:");
-
-                        String res = peer.cancelBid(astaCancelBid);
-                        terminal.printf(" %s\n", res + "\n");
+                        String cancelBidCheck = verifyParameter(astaCancelBid, null, null, null);
+                        if (cancelBidCheck.equalsIgnoreCase("success")) {
+                            String res = peer.cancelBid(astaCancelBid);
+                            terminal.printf(" %s\n", res + "\n");
+                        } else {
+                            terminal.printf("\nErrore parametri: %s \n", cancelBidCheck);
+                        }
                         break;
 
                     case 4:
@@ -157,23 +167,31 @@ public class App {
                         String astaStatus = textIO.newStringInputReader()
                                 .withDefaultValue("Asta Default")
                                 .read("Name:");
-
+                        String checkStaturParameter = verifyParameter(astaStatus, null, null, null);
                         terminal.printf("Includere descrizione ?\n");
                         boolean includeDescription = textIO.newBooleanInputReader().withDefaultValue(false).read("include?");
-                        String response = peer.checkAuction(astaStatus);
-                        if (includeDescription) {
-                            response += "\n" + peer.getDescriptionByName(astaStatus);
+                        if (checkStaturParameter.equalsIgnoreCase("success")) {
+                            String response = peer.checkAuction(astaStatus);
+                            if (includeDescription) {
+                                response += "\n" + peer.getDescriptionByName(astaStatus);
+                            }
+                            terminal.printf(" %s\n", response + "\n");
+                        } else {
+                            terminal.printf("\nErrore parametri: %s \n", checkStaturParameter);
                         }
-                        terminal.printf(" %s\n", response + "\n");
-
                         break;
                     case 5:
                         terminal.printf("Inserisci Nome Asta su cui eliminare l'oferta\n");
                         String deleteBidAuction = textIO.newStringInputReader()
                                 .withDefaultValue("Asta Default")
                                 .read("Name:");
+                         String deleteBidCheck = verifyParameter(deleteBidAuction, null, null, null);
+                         if (deleteBidCheck.equalsIgnoreCase("success")) {
                         String resDeleteBid = peer.cancelBid(deleteBidAuction);
-                        terminal.printf(" %s\n", resDeleteBid + "\n");
+                        terminal.printf(" \n%s\n", resDeleteBid);
+                         }else {
+                            terminal.printf("\nErrore parametri: %s \n", deleteBidCheck);
+                        }
                         break;
 
                     case 6:
@@ -187,8 +205,14 @@ public class App {
                         String deleteAuction = textIO.newStringInputReader()
                                 .withDefaultValue("Asta Default")
                                 .read("Name:");
+                        
+                        String deleteAuctionCheck = verifyParameter(deleteAuction, null, null, null);
+                        if (deleteAuctionCheck.equalsIgnoreCase("success")) {
                         String resDeleteAuction = peer.removeAuction(deleteAuction);
                         terminal.printf(" %s\n", resDeleteAuction + "\n");
+                        }else {
+                            terminal.printf("\nErrore parametri: %s \n", deleteAuctionCheck);
+                        }
                         break;
 
                     case 8:
@@ -199,8 +223,14 @@ public class App {
                         String updateDescription = textIO.newStringInputReader()
                                 .withDefaultValue("Default description")
                                 .read("Description:");
+                        
+                        String updateDescriptionCheck = verifyParameter(updateAuctionName, updateDescription, null, null);
+                        if (updateDescriptionCheck.equalsIgnoreCase("success")) {
                         String resUpdate = peer.updateAuctionDescription(updateAuctionName, updateDescription);
                         terminal.printf(" %s\n", resUpdate + "\n");
+                        }else {
+                            terminal.printf("\nErrore parametri: %s \n", updateDescriptionCheck);
+                        }
                         break;
                     case 9:
                         terminal.printf("Sei sicuro di voler abbandonare il sistema ?");
@@ -239,12 +269,38 @@ public class App {
         terminal.printf("\n2 - Raise su Prezzo Massimo\n");
 
     }
-    
+
     public static void printRaiseBid(TextTerminal terminal) {
         terminal.printf("\n1 - €1\n");
         terminal.printf("\n2 - €2\n");
         terminal.printf("\n3 - €3\n");
 
     }
-    
+
+    private String verifyParameter(String nome, String descrizione, String data, Double prezzo) {
+        if (nome != null && nome.chars().allMatch(Character::isDigit)) {
+            return "Il nome dell'asta non è un valore unicamente numerico";
+        } else if (descrizione != null && descrizione.chars().allMatch(Character::isDigit)) {
+            return "La descrizione dell'asta non è un valore unicamente numerico";
+        } else if (prezzo != null && prezzo <= 0) {
+            return "Il prezzo non può essere minore o pari a 0";
+        } else {
+
+            try {
+                if (data != null) {
+                    Date expire_date = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(data);
+                    if (expire_date.before(new Date(System.currentTimeMillis() + 3600 * 1000))) {
+                        return "La data di scadenza dell'asta non può essere precedente alla data attuale";
+                    }
+                }
+            } catch (Exception e) {
+                return "Formato Data errato";
+
+            }
+
+        }
+
+        return "success";
+
+    }
 }

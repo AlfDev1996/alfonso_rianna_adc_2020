@@ -3,12 +3,13 @@ package it.unisa.adc.auctionProject.beans;
 import java.io.Serializable;
 
 public class AuctionBid implements Serializable {
+
     private User bidder;
     private double bid;
 
     public AuctionBid() {
-        this.bid=0;
-        this.bidder= null;
+        this.bid = 0;
+        this.bidder = null;
 
     }
 

@@ -254,14 +254,7 @@ public class AuctionMechanismImpl implements AuctionMechanism {
         return msg;
     }
 
-    public boolean leaveSystem() throws IOException, ClassNotFoundException {
-
-        for (String s : new ArrayList<>(my_auction)) {
-            cancelBid(s);
-        }
-        _dht.peer().announceShutdown().start().awaitUninterruptibly();
-        return true;
-    }
+    
 
     private void notifiesParticipants(Auction asta, String msg) {
         ArrayList<AuctionBid> peer_participants = asta.getPartecipanti();
@@ -340,8 +333,8 @@ public class AuctionMechanismImpl implements AuctionMechanism {
         return "Error";
 
     }
-    
-    public String raiseOnAuction(String auction_name, double amount) throws ClassNotFoundException, IOException{
+
+    public String raiseOnAuction(String auction_name, double amount) throws ClassNotFoundException, IOException {
         FutureGet futureGet = _dht.get(Number160.createHash(auction_name)).start();
         futureGet.awaitUninterruptibly();
         if (futureGet.isSuccess()) {
@@ -351,10 +344,19 @@ public class AuctionMechanismImpl implements AuctionMechanism {
             Auction asta;
             asta = (Auction) futureGet.dataMap().values().iterator().next().object();
             Double bid = asta.getMaxBid();
-                bid+= amount;
-                return this.placeAbid(asta.getName_auction(), bid);
-            }
+            bid += amount;
+            return this.placeAbid(asta.getName_auction(), bid);
+        }
         return null;
+
+    }
     
+    public boolean leaveSystem() throws IOException, ClassNotFoundException {
+
+        for (String s : new ArrayList<>(my_auction)) {
+            cancelBid(s);
+        }
+        _dht.peer().announceShutdown().start().awaitUninterruptibly();
+        return true;
     }
 }

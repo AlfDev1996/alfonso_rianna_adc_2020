@@ -340,7 +340,7 @@ The test scenarios that have been created specifically are:
 # How To Run
 
 ## Contenerization
-
+![enter image description here](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTAzPMBlhHWrHahasAijS7gxPx3hKMrx9Qfw&usqp=CAU)
 Containers are an abstraction at the app layer that packages code and dependencies together. Multiple containers can run on the same machine and share the OS kernel with other containers, each running as isolated processes in user space. Containers take up less space than VMs (container images are typically tens of MBs in size), can handle more applications and require fewer VMs and Operating systems.
 So this technique inherently fits the solution, the solution contains a dockerfile which allows you to launch an ubuntu container for execution
 
@@ -375,3 +375,44 @@ CMD java -jar placeAuctionProject-1.0-jar-with-dependencies.jar -m $MASTERIP -id
  - *NAME*: Name of the user / peer accessing the system.
  - *GUI*: Parameter that allows you to decide when starting up whether to start the version with a graphical interface or not.
 
+## Build app in docker container
+First of all you can build your docker container:
+
+```docker build --no-cache -t place-auction-project .```
+
+#### Start master peer
+
+After that you can start the master peer, in interactive mode (-i) and with four (-e) environment variables:
+With GUI:
+
+    docker run -i --name MASTER-PEER -e DISPLAY=host.docker.internal:0 -e MASTERIP="127.0.0.1" -e ID=0 -e NAME="yourname" -e GUI="YES" place-auction-project
+
+Command Line Vesion:
+
+    docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 -e NAME="yourname" -e GUI="NO" place-auction-project
+
+>After the first launch, you can launch the master node using the following command: `docker start -i MASTER-PEER`.
+>
+#### Start a generic peer
+When master is started you have to check the ip address of your container:
+
+-   Check the docker :  `docker ps`
+-   Check the IP address:  `docker inspect <container ID>`
+
+Now you can start your peers varying the unique peer id:
+
+    docker run -i --name FIRST-PEER -e DISPLAY=host.docker.internal:0 -e MASTERIP="172.17.0.2" -e ID=1 -e NAME="peername" -e GUI="YES" place-auction-project
+
+Command Line Vesion:
+
+    docker run -i --name FIRST-PEER -e MASTERIP="172.17.0.2" -e ID=1 -e NAME="peername" -e GUI="NO" place-auction-project
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTg5NTM4Njg0MCwtMTU4MTgwMjUyMCwtOD
+k1Mzg2ODQwLDQ2NTMyODc0MiwtMTU4MTc0ODY3NywtNDkyOTY1
+MzY0LDc1ODEyNzM0MSwtMTA3MDIzMTY5MSwxMDg2ODkzNTk5LC
+03NTYyOTE1MzUsLTc3Mjc3ODcwOSw5MTUzNDg5NzUsLTk5MzU2
+MzcwNCwyMTE3NTA4OTIzLDEzMzcwNDExNTUsLTI3Mjk5MDgzNS
+wtODcwNDE4NzI3LC0yNDA1MDYxMjAsLTE0MTU0Mzk5ODEsMTk1
+MjA1OTk0N119
+-->

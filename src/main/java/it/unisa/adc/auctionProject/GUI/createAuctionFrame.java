@@ -6,21 +6,12 @@
 package it.unisa.adc.auctionProject.GUI;
 
 import it.unisa.adc.auctionProject.AuctionMechanismImpl;
-import it.unisa.adc.auctionProject.CreateAuctionException;
 import java.awt.event.WindowEvent;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import it.unisa.adc.auctionProject.CreateAuctionException;
-import java.text.DateFormat;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+
 
 /**
  *
@@ -172,8 +163,8 @@ private AuctionMechanismImpl peerRif;
             if(expDate.before(new Date(System.currentTimeMillis() + 3600 * 1000)))
                 throw new CreateAuctionException("La data di creazione deve essere successiva alla data corrente locale");
             
-            if(reservePrice<0)
-                throw new CreateAuctionException("Il prezzo di riserva non può essere negativo");
+            if(reservePrice<=0)
+                throw new CreateAuctionException("Il prezzo di riserva non può essere negativo o pari a 0");
             
             if(peerRif.createAuction(name, expDate, reservePrice, desc)){
                 rifMain.outConsoleSet("Asta "+name+" Creata con successo");
