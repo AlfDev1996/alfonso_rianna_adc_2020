@@ -354,7 +354,7 @@ RUN git clone https://github.com/AlfDev1996/alfonso_rianna_adc_2020.git
 
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
-COPY --from=0 /app/PlaceAuctionProject /app
+COPY --from=0 /app/alfonso_rianna_adc_2020 /app
 RUN mvn clean
 RUN mvn package
 
@@ -420,11 +420,11 @@ Command Line Vesion:
     docker run -i --name FIRST-PEER -e MASTERIP="172.17.0.2" -e ID=1 -e NAME="peername" -e GUI="NO" place-auction-project
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg4MTAxNDI2NCw3Mjc3MDYyMTcsMTYxOT
-gyNTQ5OSwxMDk4NzkwMTg0LC04OTUzODY4NDAsLTE1ODE4MDI1
-MjAsLTg5NTM4Njg0MCw0NjUzMjg3NDIsLTE1ODE3NDg2NzcsLT
-Q5Mjk2NTM2NCw3NTgxMjczNDEsLTEwNzAyMzE2OTEsMTA4Njg5
-MzU5OSwtNzU2MjkxNTM1LC03NzI3Nzg3MDksOTE1MzQ4OTc1LC
-05OTM1NjM3MDQsMjExNzUwODkyMywxMzM3MDQxMTU1LC0yNzI5
-OTA4MzVdfQ==
+eyJoaXN0b3J5IjpbMjY5NDAwMDU5LDE4ODEwMTQyNjQsNzI3Nz
+A2MjE3LDE2MTk4MjU0OTksMTA5ODc5MDE4NCwtODk1Mzg2ODQw
+LC0xNTgxODAyNTIwLC04OTUzODY4NDAsNDY1MzI4NzQyLC0xNT
+gxNzQ4Njc3LC00OTI5NjUzNjQsNzU4MTI3MzQxLC0xMDcwMjMx
+NjkxLDEwODY4OTM1OTksLTc1NjI5MTUzNSwtNzcyNzc4NzA5LD
+kxNTM0ODk3NSwtOTkzNTYzNzA0LDIxMTc1MDg5MjMsMTMzNzA0
+MTE1NV19
 -->
