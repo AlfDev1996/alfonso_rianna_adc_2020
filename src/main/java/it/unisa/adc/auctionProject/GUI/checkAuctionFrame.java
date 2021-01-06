@@ -107,8 +107,8 @@ private AuctionMechanismImpl peerRif;
         String status="";
         String description="";
         
-        if(name.equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(this, "Errore Dati di Input");
+        if(name.equalsIgnoreCase("")||name.chars().allMatch(Character::isDigit)){
+            JOptionPane.showMessageDialog(this, "Errore Dati di Input:\nNome non vuoto o valore unicamente numerico");
         }else
         {
             try {

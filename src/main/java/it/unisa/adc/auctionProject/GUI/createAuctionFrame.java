@@ -154,8 +154,8 @@ private AuctionMechanismImpl peerRif;
         try {
             String name = auctionNameCreate.getText();
             String desc = auctionDescCreate.getText();
-            if(name.equalsIgnoreCase("")|| desc.equalsIgnoreCase(""))
-                throw new Exception();
+            if(name.equalsIgnoreCase("")|| desc.equalsIgnoreCase("")||name.chars().allMatch(Character::isDigit)|| desc.chars().allMatch(Character::isDigit))
+                throw new CreateAuctionException("Il nome e la descrizione dell'asta non possono essere vuoti o valori unicamente numerici");
             double reservePrice = Double.parseDouble(reservePriceCreate.getText());
             Date expDate = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(auctionExpCreate.getText());
            

@@ -83,8 +83,8 @@ private AuctionMechanismImpl peerRif;
     private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
         // TODO add your handling code here:
         String name = txtNameDelete.getText();
-        if(name.equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(this, "Errore Dati di Input");
+        if(name.equalsIgnoreCase("")|| name.chars().allMatch(Character::isDigit)){
+            JOptionPane.showMessageDialog(this, "Errore Dati di Input:\nNome non vuoto o valore unicamente numerico");
         }else{
             try {
                 String res = peerRif.cancelBid(name);

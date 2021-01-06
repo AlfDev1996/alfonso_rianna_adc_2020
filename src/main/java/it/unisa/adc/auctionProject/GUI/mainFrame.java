@@ -7,6 +7,7 @@ package it.unisa.adc.auctionProject.GUI;
 
 import it.unisa.adc.auctionProject.AuctionMechanismImpl;
 import it.unisa.adc.auctionProject.MessageListener;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.OptionPaneUI;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -162,6 +166,11 @@ public class mainFrame extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnDeleteAuction.setText("Rimuovi Asta");
         btnDeleteAuction.setMaximumSize(new java.awt.Dimension(94, 35));
@@ -255,9 +264,11 @@ public class mainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void outConsoleSet(String text) {
+    public void outConsoleSet(String text){
         consoleDisplay.append("\n" + text + "\n");
+       
     }
+   
 
     public void messageForUser(mainFrame parent, long endTime, final String auctionName) {
         new java.util.Timer().schedule(
@@ -444,6 +455,10 @@ public class mainFrame extends javax.swing.JFrame {
     private void btnPlaceBidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceBidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPlaceBidActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

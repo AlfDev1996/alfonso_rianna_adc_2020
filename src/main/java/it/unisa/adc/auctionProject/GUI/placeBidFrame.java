@@ -199,7 +199,7 @@ public class placeBidFrame extends javax.swing.JFrame {
         String status;
         try {
             String name = nameAuctionBid.getText();
-            if (name.equalsIgnoreCase("")) {
+            if (name.equalsIgnoreCase("")||name.chars().allMatch(Character::isDigit)) {
                 throw new Exception();
             }
             double bid = Double.parseDouble(auctionBid.getText());
