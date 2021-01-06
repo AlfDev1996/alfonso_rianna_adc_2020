@@ -350,7 +350,7 @@ So this technique inherently fits the solution, the solution contains a dockerfi
 ```dockerfile
 FROM alpine/git
 WORKDIR /app
-RUN git clone https://github.com/AlfDev1996/PlaceAuctionProject.git
+RUN git clone https://github.com/AlfDev1996/alfonso_rianna_adc_2020.git
 
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
@@ -376,14 +376,24 @@ CMD java -jar placeAuctionProject-1.0-jar-with-dependencies.jar -m $MASTERIP -id
  - *GUI*: Parameter that allows you to decide when starting up whether to start the version with a graphical interface or not.
 
 ## Build app in docker container
-First of all you can build your docker container:
+1. Install '[Docker](https://docs.docker.com/install/)'.
+2.  Clone the project on your desktop
+		
+	```
+	git clone https://github.com/AlfDev1996/alfonso_rianna_adc_2020.git
+	```
+3. Access the folder where you cloned the project
+4. Build your docker container:
 
-```docker build --no-cache -t place-auction-project .```
+	```docker build --no-cache -t place-auction-project .```
 
 #### Start master peer
 
 After that you can start the master peer, in interactive mode (-i) and with four (-e) environment variables:
 >In addition to the 4 variables listed above, in the version with graphic interface we need an additional variable, that is the DISPLAY variable
+>1. To use the solution with graphical interface from Mac Os it is necessary to install '[Xquartz](https://www.xquartz.org/)'
+>2. Once XQuartz is started, "Allow connections from network clients" must be checked in the Security section.
+>![enter image description here](https://miro.medium.com/max/1400/1*zMO-bPar1Z1AUUH-O2WBfw.png)
 >
 With GUI:
 
@@ -410,11 +420,11 @@ Command Line Vesion:
     docker run -i --name FIRST-PEER -e MASTERIP="172.17.0.2" -e ID=1 -e NAME="peername" -e GUI="NO" place-auction-project
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYxOTgyNTQ5OSwxMDk4NzkwMTg0LC04OT
-UzODY4NDAsLTE1ODE4MDI1MjAsLTg5NTM4Njg0MCw0NjUzMjg3
-NDIsLTE1ODE3NDg2NzcsLTQ5Mjk2NTM2NCw3NTgxMjczNDEsLT
-EwNzAyMzE2OTEsMTA4Njg5MzU5OSwtNzU2MjkxNTM1LC03NzI3
-Nzg3MDksOTE1MzQ4OTc1LC05OTM1NjM3MDQsMjExNzUwODkyMy
-wxMzM3MDQxMTU1LC0yNzI5OTA4MzUsLTg3MDQxODcyNywtMjQw
-NTA2MTIwXX0=
+eyJoaXN0b3J5IjpbMTg4MTAxNDI2NCw3Mjc3MDYyMTcsMTYxOT
+gyNTQ5OSwxMDk4NzkwMTg0LC04OTUzODY4NDAsLTE1ODE4MDI1
+MjAsLTg5NTM4Njg0MCw0NjUzMjg3NDIsLTE1ODE3NDg2NzcsLT
+Q5Mjk2NTM2NCw3NTgxMjczNDEsLTEwNzAyMzE2OTEsMTA4Njg5
+MzU5OSwtNzU2MjkxNTM1LC03NzI3Nzg3MDksOTE1MzQ4OTc1LC
+05OTM1NjM3MDQsMjExNzUwODkyMywxMzM3MDQxMTU1LC0yNzI5
+OTA4MzVdfQ==
 -->
