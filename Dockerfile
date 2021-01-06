@@ -4,7 +4,7 @@ RUN git clone https://github.com/AlfDev1996/alfonso_rianna_adc_2020.git
 
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
-COPY --from=0 /app/PlaceAuctionProject /app
+COPY --from=0 /app/alfonso_rianna_adc_2020 /app
 RUN mvn clean
 RUN mvn package
 
